@@ -1,11 +1,9 @@
-# run_all.py
-from scrapers import novibet  # add more when ready
+from scrapers import novibet, stoiximan
 from models import Event
 
 SCRAPERS = [
     novibet,
-    # stoiximan,
-    # pamestoixima,
+    stoiximan,
 ]
 
 def save_events(bookmaker: str, events: list[Event]):
