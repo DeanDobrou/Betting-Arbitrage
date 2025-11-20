@@ -1,9 +1,10 @@
-from scrapers import novibet, stoiximan
+from scrapers import novibet, stoiximan, bet365
 from models import Event
 
 SCRAPERS = [
     novibet,
     stoiximan,
+    bet365,
 ]
 
 def save_events(bookmaker: str, events: list[Event]):
