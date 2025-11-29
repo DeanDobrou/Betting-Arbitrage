@@ -7,7 +7,7 @@ from zoneinfo import ZoneInfo
 
 from playwright.sync_api import sync_playwright, Response
 
-from models import Event, Market
+from core.models import Event, Market
 
 BOOKMAKER = "bet365"
 BRAVE_PATH = r"C:\Program Files\BraveSoftware\Brave-Browser\Application\brave.exe"

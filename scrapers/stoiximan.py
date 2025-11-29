@@ -5,7 +5,7 @@ from datetime import datetime
 from zoneinfo import ZoneInfo
 
 from playwright.sync_api import sync_playwright
-from models import Event, Market
+from core.models import Event, Market
 
 BOOKMAKER = "stoiximan"
 
