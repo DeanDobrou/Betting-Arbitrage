@@ -3,7 +3,7 @@ from typing import List, Optional
 from datetime import datetime, timezone
 from zoneinfo import ZoneInfo
 from playwright.sync_api import sync_playwright, Response
-from models import Event, Market
+from core.models import Event, Market
 
 ATHENS = ZoneInfo("Europe/Athens")
 
