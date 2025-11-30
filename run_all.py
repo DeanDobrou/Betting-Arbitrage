@@ -1,6 +1,6 @@
 from pathlib import Path
 from typing import List
-from scrapers import novibet, stoiximan, bet365, bwin, pamestoixima
+from scrapers import novibet, stoiximan, bet365, bwin, pamestoixima, fonbet
 from core.models import Event
 from config.settings import settings
 from utils.logger import get_logger
@@ -13,6 +13,7 @@ SCRAPERS = [
     bet365,
     bwin,
     pamestoixima,
+    fonbet,
 ]
 
 
