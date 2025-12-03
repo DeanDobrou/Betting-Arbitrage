@@ -8,12 +8,12 @@ from utils.logger import get_logger
 logger = get_logger(__name__)
 
 SCRAPERS = [
-    # novibet,
-    # stoiximan,
-    # bet365,
-    # bwin,
-    # pamestoixima,
-    # fonbet,
+    novibet,
+    stoiximan,
+    bet365,
+    bwin,
+    pamestoixima,
+    fonbet,
     betsson,
 ]
 
