@@ -2,3 +2,5 @@ playwright
 pydantic
 pydantic-settings
 python-dotenv
+rapidfuzz
+unidecode
