@@ -1,6 +1,7 @@
 from typing import List, Dict, Set
 from datetime import timedelta
 from core.models import Event
+from core.normalizer import teams_match
 import logging
 
 logger = logging.getLogger(__name__)
@@ -42,20 +43,22 @@ class MatchedEvent:
 
 
 class EventMatcher:
-    """Matches events across multiple bookmakers using simple string matching."""
+    """Matches events across multiple bookmakers using fuzzy string matching."""
 
-    def __init__(self, time_threshold_minutes: int = 15):
+    def __init__(self, time_threshold_minutes: int = 15, similarity_threshold: int = 85):
         """
         Initialize the event matcher.
 
         Args:
             time_threshold_minutes: Max time difference to consider events as same match
+            similarity_threshold: Fuzzy matching threshold (0-100). Default 85.
         """
         self.time_threshold = timedelta(minutes=time_threshold_minutes)
+        self.similarity_threshold = similarity_threshold
 
     def events_match(self, event1: Event, event2: Event) -> bool:
         """
-        Check if two events represent the same football match.
+        Check if two events represent the same football match using fuzzy matching.
 
         Args:
             event1: First event
@@ -69,14 +72,11 @@ class EventMatcher:
         if time_diff > self.time_threshold:
             return False
 
-        # Simple case-insensitive string matching for team names
-        if event1.home.lower().strip() != event2.home.lower().strip():
-            return False
+        # Use fuzzy matching for team names
+        home_match = teams_match(event1.home, event2.home, threshold=self.similarity_threshold)
+        away_match = teams_match(event1.away, event2.away, threshold=self.similarity_threshold)
 
-        if event1.away.lower().strip() != event2.away.lower().strip():
-            return False
-
-        return True
+        return home_match and away_match
 
     def match_events(self, events_by_bookmaker: Dict[str, List[Event]]) -> List[MatchedEvent]:
         """
