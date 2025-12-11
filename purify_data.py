@@ -1,14 +1,3 @@
-"""
-Data purification script - matches events across bookmakers using fuzzy string matching.
-
-This script ONLY handles data purification and matching. Arbitrage detection is separate.
-
-Key features:
-- Universal team name normalization (no manual mappings)
-- Fuzzy string matching for spelling variations
-- Preserves U19/U21/B teams (different teams, not same as parent)
-- Time-based matching (events within 15 minutes)
-"""
 from pathlib import Path
 from typing import Dict, List
 from datetime import timedelta
@@ -112,7 +101,7 @@ def purify_events(events_by_bookmaker: Dict[str, List[Event]],
         similarity_threshold: Minimum team name similarity (0-100)
 
     Returns:
-        List of purified events found in at least 3 bookmakers (required for arbitrage)
+        List of purified events found in at least 2 bookmakers
     """
     purified_events: List[PurifiedEvent] = []
     processed_indices: Dict[str, set] = {
@@ -165,8 +154,8 @@ def purify_events(events_by_bookmaker: Dict[str, List[Event]],
                     )
                     # DO NOT break - continue searching for matches in remaining bookmakers
 
-        # Only include if found in at least 3 bookmakers (required for arbitrage)
-        if len(purified.get_bookmakers()) >= 3:
+        # Only include if found in at least 2 bookmakers
+        if len(purified.get_bookmakers()) >= 2:
             purified_events.append(purified)
             logger.info(
                 f"Purified event across {len(purified.get_bookmakers())} bookmakers: "
@@ -231,7 +220,7 @@ def main():
         print(f"  {bookmaker}: {len(events)} events")
 
     print(
-        f"\nPurified events (found in 3+ bookmakers): {len(purified_events)}")
+        f"\nPurified events (found in 2+ bookmakers): {len(purified_events)}")
 
     # Show distribution by number of bookmakers
     bookmaker_counts = {}
