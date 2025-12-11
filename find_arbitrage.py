@@ -4,6 +4,8 @@ import io
 from pathlib import Path
 from typing import Dict, List, Optional
 from datetime import datetime
+from config.settings import settings
+from utils.webhook import send_to_webhook
 
 # Ensure UTF-8 encoding for Greek text
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
@@ -219,6 +221,19 @@ def main():
 
         print(f"Saved opportunities to: {output_file}")
         print()
+
+        # Send to n8n webhook if configured
+        if settings.N8N_WEBHOOK_URL:
+            print(f"Sending to n8n webhook: {settings.N8N_WEBHOOK_URL}")
+            webhook_success = send_to_webhook(settings.N8N_WEBHOOK_URL, opportunities)
+            if webhook_success:
+                print(f"✓ Successfully sent {len(opportunities)} opportunities to n8n")
+            else:
+                print("✗ Failed to send to n8n webhook (check logs)")
+            print()
+        else:
+            print("Note: N8N_WEBHOOK_URL not configured. Set it in .env to enable n8n integration.")
+            print()
         print("=" * 60)
         print("TOP ARBITRAGE OPPORTUNITIES")
         print("=" * 60)
