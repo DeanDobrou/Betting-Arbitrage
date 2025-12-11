@@ -17,9 +17,13 @@ class Settings(BaseSettings):
     # Timezone
     TIMEZONE: str = "Europe/Athens"
 
+    # n8n Webhook
+    N8N_WEBHOOK_URL: str = ""  # Set in .env or leave empty to disable
+
     class Config:
         env_file = ".env"
         env_file_encoding = "utf-8"
+        extra = "ignore"
 
 
 # Global settings instance

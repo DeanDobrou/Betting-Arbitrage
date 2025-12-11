@@ -4,3 +4,4 @@ pydantic-settings
 python-dotenv
 rapidfuzz
 unidecode
+requests
